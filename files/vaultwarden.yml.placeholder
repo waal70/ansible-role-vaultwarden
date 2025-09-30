@@ -1,3 +1,4 @@
+# Please note this is the default configuration file.
 services:
   vaultwarden:
     image: vaultwarden/server:latest
@@ -5,8 +6,8 @@ services:
     restart: always
     environment:
       # DOMAIN: "https://vaultwarden.example.com"  # required when using a reverse proxy; your domain; vaultwarden needs to know it's https to work properly with attachments
-      SIGNUPS_ALLOWED: "true" # Deactivate this with "false" after you have created your account so that no strangers can register
       ADMIN_TOKEN: "helloadmin" # Change this to a strong random value
+      SIGNUPS_ALLOWED: "true" # Deactivate this with "false" after you have created your account so that no strangers can register
     volumes:
       - ./vw-data:/data # the path before the : can be changed
     ports:
