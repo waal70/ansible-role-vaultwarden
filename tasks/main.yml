@@ -1,5 +1,9 @@
 ---
 # tasks file for waal70.vaultwarden
+- name: Include vaulted password file
+  ansible.builtin.include_vars:
+    file: ../home/ansible-vault/vaultwarden-vars.yml
+
 - name: "Template the vaultwarden.yml file to the role's files/ directory"
   ansible.builtin.template:
     src: vaultwarden.yml.j2
@@ -17,6 +21,9 @@
     stack_list:
       - name: vaultwarden
         file: vaultwarden.yml # file is in files/ of this role
+
+# To generate the hash for ADMIN_TOKEN, use the following command:
+# echo -n "secretpassword" | argon2 "$(openssl rand -base64 32)" -e -id -k 19456 -t 2 -p 1
 
 - name: "Return the vaultwarden yaml back to its placeholder version"
   ansible.builtin.copy:

@@ -1,2 +1,4 @@
 ---
 # defaults file for waal70.vaultwarden
+vw_domain: https://vaultwarden.example.com
+vw_admintoken: difficultargon2text
