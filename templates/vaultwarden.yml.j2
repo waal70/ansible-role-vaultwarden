@@ -10,7 +10,7 @@ services:
       WEBSOCKET_ENABLED: "true" # Enable WebSocket notifications
       ROCKET_PORT: 83
     volumes:
-      - ./vw-data:/data # the path before the : can be changed
+      - /appdata/vw-data:/data # the path before the : can be changed
     networks:
       - reverse-proxy
 networks:
