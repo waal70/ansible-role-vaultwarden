@@ -12,7 +12,6 @@
         - "{{ lookup('env', 'PRIVATE_REPO') | default('~') }}/ansible-vault/{{ ansible_role_name }}-vars.yml"
       skip: true
 
-
 - name: "Template the vaultwarden.yml file to the role's files/ directory"
   ansible.builtin.template:
     src: vaultwarden.yml.j2
@@ -47,3 +46,17 @@
     remote_src: false
     force: true
   delegate_to: localhost
+
+- name: "Set fact for user to run docker exec under"
+  ansible.builtin.set_fact:
+    docker_exec_user: "{{ ansible_env.SUDO_USER | default(ansible_env.USER, true) | default(ansible_user_id, true) }}"
+
+- name: "Schedule a regular export in cron"
+  ansible.builtin.cron:
+    name: "vaultwarden db-export"
+    weekday: "5"
+    minute: "25"
+    hour: "22"
+    user: "{{ docker_exec_user }}"
+    job: "/usr/bin/docker exec -it vaultwarden /vaultwarden backup >> /home/{{ docker_exec_user }}/crontab.log 2>&1"
+    state: "present"
