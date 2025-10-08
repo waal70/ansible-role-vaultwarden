@@ -12,6 +12,12 @@ services:
       - '443:443' # Public HTTPS Port
       - '81:81' # Admin Web Port
       # default login nginx-pm: admin@example.com / changeme
+    healthcheck:
+      test: ["CMD", "/usr/bin/check-health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
     environment:
       DB_SQLITE_FILE: "/data/npm-database.sqlite"
       # Uncomment this if IPv6 is not enabled on your host
