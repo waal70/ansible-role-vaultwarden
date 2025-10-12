@@ -58,5 +58,5 @@
     minute: "25"
     hour: "22"
     user: "{{ docker_exec_user }}"
-    job: "/usr/bin/docker exec -it vaultwarden /vaultwarden backup >> /home/{{ docker_exec_user }}/crontab.log 2>&1"
+    job: "/usr/bin/docker exec -t vaultwarden /vaultwarden backup >> /home/{{ docker_exec_user }}/crontab.log 2>&1"
     state: "present"
