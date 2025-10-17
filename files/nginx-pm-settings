@@ -1,0 +1,15 @@
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection $http_connection;
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+# test websockets with
+curl -v --http1.1 'https://your.domain.tld/notifications/hub?access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9' \
+  -H 'Sec-WebSocket-Version: 13' \
+  -H 'Sec-WebSocket-Key: 36M0mX7Fl2JgMBdnGfEpsQ==' \
+  -H 'Connection: Upgrade' \
+  -H 'Sec-Fetch-Mode: websocket' \
+  -H 'Upgrade: websocket'
+
+# Should return "Invalid token"
